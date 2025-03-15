@@ -89,7 +89,7 @@
 
 1. The repo is no server ==> Github actions never run your code
 2. your Personal Access Token on your Github must be able to create and deploy workstations
-3. Every job gets its own environment. its own VM thats totally isolate from other machines and jobs
+3. Every job gets its own environment. its own VM thats totally isolated from other machines and jobs.
 4. By default Pull Requests based on Forks do NOT trigger a workflow because:
     1. Everyone can fork and open pull requests
     2. Malicious workflow runs & excess costs could happen

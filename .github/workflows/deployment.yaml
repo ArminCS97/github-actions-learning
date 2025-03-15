@@ -35,10 +35,23 @@ jobs:
       - name: Deploy
         run: python deploy.py
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: 'artifact'
           path: |
             deployed.txt
             package.json
             dist
+          retention-days: 10
+  download:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get built artifacts
+        uses: actions/download-artifact@v3
+        with: # We need to know what file o download
+          name: deployed.txt
+      - name: Display all files
+        run: ls
+
+
