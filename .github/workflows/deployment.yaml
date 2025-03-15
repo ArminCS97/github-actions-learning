@@ -1,7 +1,7 @@
 name: Deployment
 on: push
 jobs:
-  deploy:
+  pre-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -14,5 +14,9 @@ jobs:
         run: python lint.py
       - name: Test
         run: pytest tests.py
+  deploy:
+    needs: pre-deploy
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy
-        run: echo "Deploying...."
+        run: python deploy.py
