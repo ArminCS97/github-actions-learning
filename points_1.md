@@ -1,0 +1,90 @@
+1. CI/CD: (Automate Code testing, building and deployment)
+2. Code and repo management: Automate code reviews, issue management
+
+# Questions
+
+1. Git: A free VCS to manage source code changes
+2. Github: Cloud repo
+
+# Building Blocks
+
+1. Workflow
+    1. Is attached to a repo
+    2. It is made out of JOBS
+    3. Triggered upon Events
+2. Jobs:
+    1. Define a Runner (execution env)
+    2. Conatsin one or more Steps
+    3. Run in Parallel or sequentially
+    4. Can be conditional
+3. Steps:
+    1. Execuute a shell script or action
+    2. Can use custom or 3rd party actions
+    3. Steps are in order
+    4. can be conditional
+
+# Actions
+
+1. A (custom) application that performs a typically complex and frequently repeated task
+2. You can build your own actions or official or community actions
+3. You use Actions instead of run commands
+
+# Expressions
+
+# Triggers
+
+1. Available Events:
+    1. Repository-related: push, create, PR, fork, ...
+    2. `workflow_disprach`: Manually trigger the WF
+    3. `repository_dispatch`: REST API to trigger the WF
+    4. `schedule`: scheduled WF
+    5. `workflow_call`: WF will be called by other WFs
+2. Activity Types (variants for an events) ==> for example for `pull_request` event we have these activity types
+    1. opened
+    2. closed
+    3. locked
+    4. By deafult, a WF only runs when `pull_request` event activity type is `opened`, `reopned` or `synchronize`
+   ```yaml
+   name: Testing
+   on:
+     pull_request: 
+       types: # Activity Types
+         - opened
+         - reopened
+         - ready_for_review
+       branches: # Its a filter
+         - 'feat/**'
+     push:
+       branches: # Its a filter
+         - 'main'
+         - 'master'
+         - 'feat/**'
+       path-ignore:
+         - ".github/workflows/*"
+     workflow_dispatch:
+   ```
+3. Event Filters:
+
+# Skip triggering a WF
+
+1. Workflows that would otherwise be triggered using on: push or on: pull_request won't be triggered if you add any of
+   the following strings to the commit message in a push, or the HEAD commit of a pull request:
+   ```text
+   [skip ci]
+   [ci skip]
+   [no ci]
+   [skip actions]
+   [actions skip]
+   ```
+   `git commit -m "my message [skip actions]`
+
+# Points
+
+1. The repo is no server ==> Github actions never run your code
+2. your Personal Access Token on your Github must be able to create and deploy workstations
+3. Every job gets its own environment. its own VM thats totally isolate from other machines and jobs
+4. By default Pull Requests based on Forks do NOT trigger a workflow because:
+    1. Everyone can fork and open pull requests
+    2. Malicious workflow runs & excess costs could happen
+    3. ==> the main github repo mainater has to confirm the WF run
+
