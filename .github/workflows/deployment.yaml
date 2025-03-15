@@ -9,7 +9,7 @@ jobs:
       - name: Get CWD and all of its files
         run: pwd && ls -laR
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements-test.txt
       - name: Lint
         run: python lint.py
       - name: Test
