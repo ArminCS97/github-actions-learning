@@ -6,6 +6,8 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      - name: Get CWD and all of its files
+        run: pwd && ls -laR
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Lint
